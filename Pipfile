@@ -9,6 +9,7 @@ jupyter = "*"
 lab = "*"
 notebook = "*"
 weatherlink-v2-api-sdk = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
