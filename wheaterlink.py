@@ -34,7 +34,7 @@ class WLClient(ApiClient):
         if raw_content:
             return response
         elif response.status_code == 200:
-            return response.get("stations")
+            return response.json().get("stations")
         else:
             return response.json()
 
@@ -54,6 +54,6 @@ class WLClient(ApiClient):
         if raw_content:
             return response
         elif response.status_code == 200:
-            return response.get("sensors")[0]["data"]
+            return response.json().get("sensors")[0]["data"]
         else:
             return response.json()
