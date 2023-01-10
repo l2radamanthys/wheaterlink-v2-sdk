@@ -24,15 +24,21 @@ class WLClient(ApiClient):
     def get_timestamp(self):
         return self.__date_to_timestamp(datetime.datetime.now())
 
-    def get_stations(self):
+    def get_stations(self, raw_content=False):
         query_params = {
             "api-key": self.config["api_key"],
             "t": self.get_timestamp(),
         }
         query_params["api-signature"] = calculate_signature(self.config["api_secret"], query_params)
-        return self.get_request(f"stations", params=query_params)
+        response = self.get_request(f"stations", params=query_params)
+        if raw_content:
+            return response
+        elif response.status_code == 200:
+            return response.get("stations")
+        else:
+            return response.json()
 
-    def get_historic(self, station_id, start, end):
+    def get_historic(self, station_id, start, end, raw_content=False):
         start_ts = self.__date_to_timestamp(start)
         end_ts = self.__date_to_timestamp(end)
         query_params = {
@@ -44,4 +50,10 @@ class WLClient(ApiClient):
         }
         query_params["api-signature"] = calculate_signature(self.config["api_secret"], query_params)
         del query_params["station-id"]
-        return self.get_request(f"historic/{station_id}", params=query_params)
+        response = self.get_request(f"historic/{station_id}", params=query_params)
+        if raw_content:
+            return response
+        elif response.status_code == 200:
+            return response.get("sensors")[0]["data"]
+        else:
+            return response.json()
