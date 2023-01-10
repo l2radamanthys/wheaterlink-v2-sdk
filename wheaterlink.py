@@ -24,17 +24,48 @@ class WLClient(ApiClient):
     def get_timestamp(self):
         return self.__date_to_timestamp(datetime.datetime.now())
 
-    def get_stations(self, raw_content=False):
+    @property
+    def base_query_params(self):
         query_params = {
             "api-key": self.config["api_key"],
             "t": self.get_timestamp(),
         }
         query_params["api-signature"] = calculate_signature(self.config["api_secret"], query_params)
-        response = self.get_request(f"stations", params=query_params)
+        return query_params
+
+    def get_stations(self, raw_content=False):
+        response = self.get_request(f"stations", params=self.base_query_params)
         if raw_content:
             return response
         elif response.status_code == 200:
             return response.json().get("stations")
+        else:
+            return response.json()
+
+    def get_sensors(self, raw_content=False):
+        response = self.get_request(f"sensors", params=self.base_query_params)
+        if raw_content:
+            return response
+        elif response.status_code == 200:
+            return response.json().get("sensors")
+        else:
+            return response.json()
+
+    def get_sensor_activity(self, raw_content=False):
+        response = self.get_request(f"sensors-activity", params=self.base_query_params)
+        if raw_content:
+            return response
+        elif response.status_code == 200:
+            return response.json().get("sensor-activity")
+        else:
+            return response.json()
+
+    def get_sensor_catalog(self, raw_content=False):
+        response = self.get_request(f"sensors-catalog", params=self.base_query_params)
+        if raw_content:
+            return response
+        elif response.status_code == 200:
+            return response.json().get("sensor_types")
         else:
             return response.json()
 
