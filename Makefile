@@ -14,7 +14,7 @@ help:
 	@echo ""
 
 iniciar:
-	@pipenv run pip install jupyter jupyterlab notebook tabulate
+	@pipenv install
 
 notebook:
 	@pipenv run jupyter notebook --no-browser --NotebookApp.token='' --NotebookApp.password=''

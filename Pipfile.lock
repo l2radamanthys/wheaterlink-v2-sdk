@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "377259e0adf6aa9a19cdadcc963e4684992ac83c0a1432c8843981a5ebb0f060"
+            "sha256": "b3be1d08db1ba6c590ae86ebdfcb36387aa3dff75985ab4a0fc0d0802f18a615"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1333,6 +1333,14 @@
             ],
             "version": "==0.6.2"
         },
+        "tabulate": {
+            "hashes": [
+                "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c",
+                "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"
+            ],
+            "index": "pypi",
+            "version": "==0.9.0"
+        },
         "terminado": {
             "hashes": [
                 "sha256:6ccbbcd3a4f8a25a5ec04991f39a0b8db52dfcd487ea0e578d977e6752380333",
@@ -1403,14 +1411,6 @@
                 "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"
             ],
             "version": "==0.2.5"
-        },
-        "weatherlink-v2-api-sdk": {
-            "hashes": [
-                "sha256:12762b4455f66fa360c769656e41423816d17952421c058207874eb29b191d49",
-                "sha256:3b68b54469ccc23e453c39058d2095fabade1070bbd2c0010d175072d8f034c4"
-            ],
-            "index": "pypi",
-            "version": "==1.0.0"
         },
         "webcolors": {
             "hashes": [

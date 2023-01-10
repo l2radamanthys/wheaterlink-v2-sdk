@@ -8,9 +8,9 @@ requests = "*"
 jupyter = "*"
 lab = "*"
 notebook = "*"
-weatherlink-v2-api-sdk = "*"
 python-dotenv = "*"
 python-dateutil = "*"
+tabulate = "*"
 
 [dev-packages]
 
