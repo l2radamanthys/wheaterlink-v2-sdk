@@ -1,5 +1,5 @@
-from client import ApiClient
-from calculate_signature import calculate_signature
+from .client import ApiClient
+from .calculate_signature import calculate_signature
 import datetime
 import math
 
@@ -60,12 +60,15 @@ class WLClient(ApiClient):
         else:
             return response.json()
 
-    def get_sensor_catalog(self, raw_content=False):
-        response = self.get_request(f"sensors-catalog", params=self.base_query_params)
+    def get_sensor_catalog(self, sensor_type=None, raw_content=False):
+        response = self.get_request(f"sensor-catalog", params=self.base_query_params)
         if raw_content:
             return response
         elif response.status_code == 200:
-            return response.json().get("sensor_types")
+            data = response.json().get("sensor_types")
+            if sensor_type != None:
+                return next(filter(lambda x: x["sensor_type"] == sensor_type, data), None)
+            return data
         else:
             return response.json()
 
