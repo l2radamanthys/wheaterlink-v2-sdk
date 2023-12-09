@@ -16,18 +16,28 @@ class ApiClient(object):
             endpoint = f"/{endpoint}"
         if endpoint.endswith("/"):
             endpoint = endpoint[:-1]
-
         return self.__base_url + endpoint
+
+    def get_config(self, key, default=None):
+        return self.config.get(key, default)
+    
+    def get_default_headers(self):
+        api_secret = self.get_config("api_secret", "")
+        headers = {
+            "X-Api-Secret": api_secret,
+            "Content-Type": "application/json",
+        }
+        return headers
 
     def get_request(self, endpoint, params=None, headers=None):
         if headers is None:
-            token = self.config.get("token", "")
-            headers = {
-                "Authorization": f"Bearer {token}",
-            }
-
+            headers = self.get_default_headers()
+            
         return requests.get(
-            self.url_for(endpoint), params=params, headers=headers, timeout=self.timeout
+            self.url_for(endpoint),
+            params=params,
+            headers=headers,
+            timeout=self.timeout
         )
 
     def post_request(self, endpoint, params=None, data=None, headers=None):
@@ -35,11 +45,7 @@ class ApiClient(object):
             data = json.dumps(data)
 
         if headers is None:
-            token = self.config.get("token", "")
-            headers = {
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-            }
+            headers = self.get_default_headers()
 
         return requests.post(
             self.url_for(endpoint),
@@ -54,11 +60,7 @@ class ApiClient(object):
             data = json.dumps(data)
 
         if headers is None:
-            token = self.config.get("token", "")
-            headers = {
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-            }
+            headers = self.get_default_headers()
 
         return requests.put(
             self.url_for(endpoint),
@@ -69,4 +71,12 @@ class ApiClient(object):
         )
 
     def delete_request(self, endpoint, params=None, data=None, headers=None):
-        pass
+        if headers is None:
+            headers = self.get_default_headers()
+            
+        return requests.delete(
+            self.url_for(endpoint),
+            params=params,
+            headers=headers,
+            timeout=self.timeout
+        )
